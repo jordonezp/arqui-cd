@@ -1,0 +1,35 @@
+<h2>Messages</h2>
+<body>
+  <% if(user_logged){ %>
+    <a href="<%=paths.destroySession%>">Log Out</a>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>Location</th>
+          <th>Message</th>
+          <th>Level</th>
+          <th></th>
+        </tr>
+        <tbody>
+          <% message.forEach((message) => { %>
+            <tr>
+              <td><%= message.type %></td>
+              <td><%= message.lat %></td>
+              <td><%= message.lon %></td>
+              <td><%= message.location %></td>
+              <td><%= message.message %></td>
+              <td><%= message.level %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </thead>
+    </table>
+  <% } else { %>
+    <p>Sorry! To see the messages you must be logged in.</p>
+    <a href="<%=paths.newSession%>">Log In</a>
+    <a href="<%=paths.newUser%>">Sign Up</a>
+  <% } %>  
+</body>

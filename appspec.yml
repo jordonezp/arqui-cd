@@ -1,0 +1,41 @@
+version: 0.0
+os: linux
+
+# In this case we copy all the files of the project to the EC2
+files:
+  - source: /
+    destination: /home/ubuntu/proyecto-base-grupo-06
+
+# If a file already exist in the EC2 it would be OVERWRITEN
+file_exists_behavior: OVERWRITE
+
+# 
+hooks:
+  # First the CodeDeploy Agent stop the current working application
+  ApplicationStop:
+    - location: cd_scripts/application_stop.sh
+      timeout: 100
+      runas: ubuntu
+      overwrite: true
+  # The install the service (Copy the revision files to the EC2)
+  # So we can run after install scripts for example for configuration
+  AfterInstall:
+    - location: cd_scripts/after_install.sh
+      timeout: 100
+      runas: ubuntu
+      overwrite: true
+  # Then Start the service
+  ApplicationStart:
+    - location: cd_scripts/application_start.sh
+      timeout: 100
+      runas: ubuntu
+      overwrite: true
+  # After service is up we can validate the service with a script
+  ValidateService:
+    - location: cd_scripts/validate_service.sh
+      timeout: 100
+      runas: ubuntu
+      overwrite: true
+
+# To see the order and detail of the hooks go to:
+# https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html#appspec-hooks-server

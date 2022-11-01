@@ -1,0 +1,12 @@
+.env
+.DS_Store
+node_modules/
+
+producers/node_modules
+entrega0/node_modules
+workers/node_modules
+entrega0/.env
+
+Enunciado E1.md
+Enunciado E2.md
+keys.pem

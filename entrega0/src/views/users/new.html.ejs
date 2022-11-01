@@ -1,0 +1,47 @@
+<h2>Sign Up</h2>
+<h2>New user</h2>
+<div>
+  <% if (locals.errors) { %>
+    Please fix the following errors:
+    <ul>
+      <% errors.forEach(error => { %>
+        <li><%= error.message %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+</div>
+          <form action="<%= submitUsersPath %>" method="post">
+            <div>
+              <label for="firstName">First name</label>
+              <input type="text" name="firstName" id="firstName" />
+            </div>
+            <div>
+              <label for="lastName">Last Name</label>
+              <input type="text" name="lastName" id="lastName" />
+            </div>
+            <div>
+              <label for="username">Username</label>
+              <input type="text" name="username" id="username" />
+            </div>
+            <div>
+              <label for="age">Age</label>
+              <input type="number" name="age" id="age" />
+            </div>
+            <div>
+              <label for="password">Password</label>
+              <input type="password" name="password" id="password" />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" />
+            </div>
+            <div>
+              <label for="phoneNumber">Phone number</label>
+              <input type="number" name="phoneNumber" id="phoneNumber" />
+            </div>
+            <input type="submit" value="Sign Up" />
+          </form>
+          <div>
+            <a href="<%= sessionPath %>">Log In</a>
+          </div>
+            

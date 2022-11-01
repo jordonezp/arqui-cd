@@ -1,0 +1,116 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    container_name: postgres-db
+    networks:
+      - app-network
+    environment: 
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432" 
+    volumes:
+      - db-volume:/var/lib/postgresql/data 
+  
+  app:
+    build:
+      context: ./entrega0 
+      dockerfile: Dockerfile 
+    container_name: app-entrega0
+    restart: unless-stopped
+    volumes:
+      - ./entrega0/src:/app/src
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    depends_on:
+      - db
+    environment:
+      DATABASE_USER: ${DB_USERNAME}
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      PRODUCER_HOST: http://producer:3001
+
+# script:
+  #   build:
+  #     context: ./script
+  #     dockerfile: Dockerfile
+  #   container_name: script-entrega0
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./script/scriptMQTT.js/:/script/scriptMQTT.js
+  #   environment:
+  #     - APP_HOST=http://app:3000
+  #   networks:
+  #     - app-network 
+
+  worker:
+    build:
+      context: ./workers
+      dockerfile: Dockerfile
+    container_name: worker
+    # restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      - DATABASE_NAME=${DB_NAME}
+      - DATABASE_USER=${DB_USERNAME}
+      - DATABASE_PASSWORD=${DB_PASSWORD}
+      - DATABASE_HOST=${DB_HOST}
+      - DATABASE_PORT=${DB_PORT}
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_HOST=redis
+      - EMAIL_SENDER=${EMAIL} 
+      - EMAIL_SENDER_PASSWORD=${EMAIL_PASSWORD}
+
+    networks:
+      - app-network
+
+  producer:
+    build: 
+      context: ./producers
+      dockerfile: Dockerfile
+    container_name: producer
+    ports:
+        - "3001:3001"
+    expose:
+      - "3001"
+    networks:
+      - app-network
+    environment:
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_HOST=redis
+
+  redis:
+    image: redis
+    container_name: redis
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+  # nginx:
+  #   image: nginx:latest
+  #   container_name: webserver
+  #   # restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./nginx:/etc/nginx/conf.d
+  #   depends_on:
+  #     - app
+  #   networks:
+  #     - app-network
+
+networks: 
+  app-network:
+    driver: bridge
+
+volumes:
+  db-volume:

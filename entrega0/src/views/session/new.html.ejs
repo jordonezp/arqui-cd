@@ -1,0 +1,21 @@
+<h2>Log In</h2>
+
+<form action="<%= submitPath %>" method="post">
+  <div>
+    <% if (locals.error) { %>
+      <div class="error"><%= error %></div>
+    <% } %>
+  </div>
+  <div class="field">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" value="<%= locals.username %>" />
+  </div>
+  <div >
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" value="password" />
+  </div>
+  <div>
+    <input type="submit" value="Log In" />
+  </div>
+</form>
+<a href="<%= usersPath %>">Sign Up</a>

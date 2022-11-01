@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "forever": "^4.0.3",
+    "mqtt": "^4.3.7",
+    "node-fetch": "2"
+  }
+}
