@@ -20,7 +20,7 @@ jobs:
             --application-name cd-backend \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --github-location repository=jordonezp/arqui-cd,commitId=${{github.sha}} | jq -r '.deploymentId' )
-            --deployment-group-name Jorge-App-DG \
+            --deployment-group-name 'Jorge-App-DG' \
             --description "Automatic deployment of ${{github.sha}}" \
           echo "deploymentId=$deploymentId" >> $GITHUB_OUTPUT
       - name: Wait until deployment is done
