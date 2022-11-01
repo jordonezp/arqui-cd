@@ -1,6 +1,6 @@
 # Smart Cities G6
 
-Te lo ruego chupete suazo, plisssssss
+Te lo ruego chupete suazo, por favor
 
 ## Requisitos
 - Docker Compose
