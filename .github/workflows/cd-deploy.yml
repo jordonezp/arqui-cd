@@ -23,5 +23,5 @@ jobs:
             --github-location repository=jordonezp/arqui-cd,commitId=${{github.sha}} | jq -r '.deploymentId' )
             --description "Automatic deployment of ${{github.sha}}" \
           echo "deploymentId=$deploymentId" >> $GITHUB_OUTPUT
-      - name: Wait until deployment is done
-        run: aws deploy wait deployment-successful --deployment-id ${{steps.deployApplication.outputs.deploymentId}}
+      # - name: Wait until deployment is done
+      #   run: aws deploy wait deployment-successful --deployment-id ${{steps.deployApplication.outputs.deploymentId}}
