@@ -21,7 +21,7 @@ jobs:
         run: |
           deploymentId=$( aws deploy create-deployment \
             --application-name cd-backend \
-            --deployment-config-name CodeDeployDefault.AllAtATime \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
             --deployment-group-name CodeDeployGitHub-DepGrp \
             --github-location repository=jordonezp/arqui-cd,commitId=${{github.sha}} | jq -r '.deploymentId' )
             --description "Automatic deployment of ${{github.sha}}" \
