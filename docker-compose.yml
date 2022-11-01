@@ -34,18 +34,18 @@ services:
       POSTGRES_DB: ${DB_NAME}
       PRODUCER_HOST: http://producer:3001
 
-# script:
-  #   build:
-  #     context: ./script
-  #     dockerfile: Dockerfile
-  #   container_name: script-entrega0
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ./script/scriptMQTT.js/:/script/scriptMQTT.js
-  #   environment:
-  #     - APP_HOST=http://app:3000
-  #   networks:
-  #     - app-network 
+  script:
+      build:
+        context: ./script
+        dockerfile: Dockerfile
+      container_name: script-entrega0
+      restart: unless-stopped
+      volumes:
+        - ./script/scriptMQTT.js/:/script/scriptMQTT.js
+      environment:
+        - APP_HOST=http://app:3000
+      networks:
+        - app-network 
 
   worker:
     build:
