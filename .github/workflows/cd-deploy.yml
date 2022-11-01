@@ -5,7 +5,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-18.04
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -16,13 +16,14 @@ jobs:
       - name: Deploy application
         id: deployApplication
         run: |
-            deploymentId=$( aws deploy create-deployment \
-              --application-name cd-backend \
-              --deployment-config-name CodeDeployDefault.AllAtATime \
-              --deployment-group-name Jorge-App-DG \
-              --description "Automatic deployment of ${{github.sha}}" \
-              --github-location repository=jordonezp/arqui-cd,commitId=${{github.sha}} | jq -r '.deploymentId' )
-            echo hola amiko
-            echo "deploymentId=$deploymentId" >> $GITHUB_OUTPUT
+          echo hola amiko
+          deploymentId=$( aws deploy create-deployment \
+            --application-name cd-backend \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --deployment-group-name Jorge-App-DG \
+            --description "Automatic deployment of ${{github.sha}}" \
+            --github-location repository=jordonezp/arqui-cd,commitId=${{github.sha}} | jq -r '.deploymentId' )
+          echo hola amiko
+          echo "deploymentId=$deploymentId" >> $GITHUB_OUTPUT
       - name: Wait until deployment is done
         run: aws deploy wait deployment-successful --deployment-id ${{steps.deployApplication.outputs.deploymentId}}
