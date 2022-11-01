@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/ubuntu/proyecto-base-grupo-06
+cd /home/ubuntu/jorge-cd
 
 echo "Stopping service... :)"
-docker compose down
+sudo docker compose down

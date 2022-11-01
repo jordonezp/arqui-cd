@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /home/ubuntu/proyecto-base-grupo-06
+cd /home/ubuntu/jorge-cd
 
 echo "Starting Service... :)"
-docker compose up -d --build
+sudo docker compose up -d --build

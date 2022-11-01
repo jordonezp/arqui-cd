@@ -4,7 +4,7 @@ os: linux
 # In this case we copy all the files of the project to the EC2
 files:
   - source: /
-    destination: /home/ubuntu/proyecto-base-grupo-06
+    destination: /home/ubuntu/jorge-cd
 
 # If a file already exist in the EC2 it would be OVERWRITEN
 file_exists_behavior: OVERWRITE
