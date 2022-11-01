@@ -1,4 +1,7 @@
 # Smart Cities G6
+
+te lo ruego chupete suazo
+
 ## Requisitos
 - Docker Compose
 ## Set Up
